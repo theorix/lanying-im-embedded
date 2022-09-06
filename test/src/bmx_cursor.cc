@@ -743,7 +743,9 @@ void processOperation() {
     {
       getParams(params);
       if (params.size() >= 1 && client->signInStatus() == BMXSignInStatus::SignIn) {
-        uint64_t rosterId = std::stoull(params[0]);
+        uint64_t rosterId = std::stoull(params[0])
+        BMXRosterService service = client->getRosterService();
+        service.accept(rosterId);
         BMXErrorCode errorCode = client->getRosterService().accept(rosterId);
         if (BMXErrorCode::NoError == errorCode) {
           mvwaddstr(operWindow, 1, 1, "accept success");
